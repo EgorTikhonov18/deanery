@@ -1,0 +1,11 @@
+{
+  "firstname" : "John",
+  "lastname" : "Thomas",
+  "groupNumber" : "IDB-21-10",
+  "departmentName" : "UITS",
+  "directionOfStudy" : "Прикладная информатика",
+  "arrears" : ["Базы данных",
+    "ПРИС"
+  ],
+  "statement" : "Зачислите на направление Инженерия данных"
+}
