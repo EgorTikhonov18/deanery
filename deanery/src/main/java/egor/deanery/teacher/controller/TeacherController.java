@@ -25,20 +25,15 @@ public class TeacherController {
 
     TeacherService teacherService;
 
-    @GetMapping("/info")
+    @GetMapping("/teacher/{id}/info")
     @SecurityRequirement(name = "JWT")
-
-    public @ResponseBody Teacher getTeacherInfo(@RequestParam Long id){
+    @Operation(
+            summary = "Посмотреть информацию о преподавателе",
+            description = "Просмотр информации о преподавателе по его id"
+    )
+    public @ResponseBody Teacher getTeacherInfo(@PathVariable Long id){
        return teacherService.getTeacherInfo(id);
     }
-
-   /* //@PreAuthorize("hasRole('TEACHER')")
-    @PostMapping("/teacher")
-    @SecurityRequirement(name = "JWT")
-
-    public Teacher saveTeacher(@RequestBody Teacher teacher){ //POST PostMapping("/teacher")
-        return teacherService.saveTeacher(teacher);
-    }*/
 
     @GetMapping("/teacher/student/{id}/arrears")
     @SecurityRequirement(name = "JWT")
@@ -46,7 +41,7 @@ public class TeacherController {
             summary = "Посмотреть задолженности студента",
             description = "Позволяет посмотреть задолженности студента"
     )
-    public List<String> viewArrears(@RequestParam Long id){
+    public List<String> viewArrears(@PathVariable Long id){
         return teacherService.viewArrears(id);
     }
 
@@ -65,7 +60,7 @@ public class TeacherController {
             summary = "Просмотреть заявление",
             description = "Позволяет просмотреть заявление по id преподавателя"
     )
-    public String getStatement( @RequestParam Long id){
+    public String getStatement( @PathVariable Long id){
         return teacherService.findStatement(id);
     }
 

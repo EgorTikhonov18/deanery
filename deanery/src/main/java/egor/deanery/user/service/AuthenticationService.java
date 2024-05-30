@@ -2,6 +2,7 @@ package egor.deanery.user.service;
 
 
 import egor.deanery.user.dto.JwtAuthenticationResponse;
+import egor.deanery.user.dto.ShortUserDto;
 import egor.deanery.user.dto.UserDto;
 import egor.deanery.user.model.RoleName;
 import egor.deanery.user.model.User;
@@ -33,7 +34,7 @@ public class AuthenticationService {
         return new JwtAuthenticationResponse(jwt);
     }
 
-    public JwtAuthenticationResponse signIn(UserDto userDto) {
+    public JwtAuthenticationResponse signIn(ShortUserDto userDto) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()
                 ));
@@ -44,5 +45,6 @@ public class AuthenticationService {
         var jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponse(jwt);
     }
+
 }
 

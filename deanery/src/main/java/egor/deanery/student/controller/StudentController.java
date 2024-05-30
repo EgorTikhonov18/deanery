@@ -2,6 +2,7 @@ package egor.deanery.student.controller;
 
 import egor.deanery.student.service.StudentService;
 import egor.deanery.student.model.Student;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.RolesAllowed;
@@ -27,32 +28,41 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/info")
+    @GetMapping("/student/{id}/info")
     @SecurityRequirement(name = "JWT")
-    public @ResponseBody Student getStudentInfo(@RequestParam Long id){
+    @Operation(
+            summary = "Посмотреть информацию о студенте",
+            description = "Просмотр информации о студенте по его id"
+    )
+    public @ResponseBody Student getStudentInfo(@PathVariable Long id){
         Student student = studentService.getStudentInfo(id);
         return student;
     }
 
-   /* //@PreAuthorize("permitAll()")
-    @PostMapping("/student")
+    @GetMapping("/studentId/{id}/arrears")
     @SecurityRequirement(name = "JWT")
-    public Student saveStudent(@RequestBody Student student){
-
-        return studentService.saveStudent(student);
-    }*/
-    @GetMapping("/student/arrears")
-    @SecurityRequirement(name = "JWT")
-    public List<String> viewArrears(@RequestParam Long id){
+    @Operation(
+            summary = "Посмотреть задолженности",
+            description = "Просмотр задолжностей студента по его id"
+    )
+    public List<String> viewArrears(@PathVariable Long id){
             return studentService.viewArrears(id);
     }
     @PostMapping("/student/{id}/statement")
     @SecurityRequirement(name = "JWT")
+    @Operation(
+            summary = "Написать заявление",
+            description = "написать заявление в деканат используя id студента"
+    )
     public void writeStatementToDeanery(@RequestBody String text, @PathVariable Long id){
          studentService.writeStatementToDeanery(text, id);
     }
     @GetMapping("/studentId/{id}/statement")
     @SecurityRequirement(name = "JWT")
+    @Operation(
+            summary = "Посмотреть заявление",
+            description = "Просмотр информации о заявлении студента в деканат"
+    )
     public String getStatement( @PathVariable Long id){
         return studentService.findStatement(id);
     }

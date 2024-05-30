@@ -1,6 +1,7 @@
 package egor.deanery.user.controller;
 
 
+import egor.deanery.user.dto.ShortUserDto;
 import egor.deanery.user.dto.UserDto;
 import egor.deanery.user.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,20 +24,23 @@ public class AuthController {
             description = "Позволяет зарегистрировать пользователя"
     )
 
-    @PostMapping("/signup")
+    @PostMapping("/signUp")
     public ResponseEntity<?> signUp(@RequestBody UserDto userDto) {
         try {
             return ResponseEntity.ok(authenticationService.signUp(userDto));
-        } catch (Exception e){
+        }
+        catch (Exception e){
+
             return ResponseEntity.badRequest().body(e);
         }
+
     }
     @Operation(
             summary = "Авторизация пользователя",
             description = "Позволяет авторизировать пользователя"
     )
-    @PostMapping("/signin")
-    public ResponseEntity<?> signIn(@RequestBody UserDto userDto) {
+    @PostMapping("/signIn")
+    public ResponseEntity<?> signIn(@RequestBody ShortUserDto userDto) {
         try {
             return ResponseEntity.ok(authenticationService.signIn(userDto));
         }catch (Exception e){
