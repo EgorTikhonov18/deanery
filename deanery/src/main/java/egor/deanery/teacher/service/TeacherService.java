@@ -21,12 +21,6 @@ public class TeacherService {
         this.teacherRepository = teacherRepository;
         this.studentRepository = studentRepository;
     }
-   /* public void setPasswordAndRole(Long id, String password, String role){
-        Teacher t = teacherRepository.findById(id).orElseThrow();
-        t.setPassword(password);
-        t.setRole(role);
-        teacherRepository.saveAndFlush(t);
-    }*/
 
     public Teacher getTeacherInfo(Long id){
         return teacherRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
@@ -36,32 +30,27 @@ public class TeacherService {
         return teacherRepository.save(teacher);
     }
 
-   /* public Boolean approve(Long id,Boolean answer){ //разрешение на погашение задолжности
-        Student student = studentRepository.findById(id).orElseThrow();
-        return answer;
-    }*/
-    public List<String> viewArrears(Long id){       // просмотр долгов
+    public List<String> viewArrears(Long id){
         return studentRepository.findAllArrearsById(id);
     }
 
-    public void writeStatementToDeanery(String text, Long id){ //написание заявления препода
+    public void writeStatementToDeanery(String text, Long id){
         Teacher teacher = teacherRepository.findById(id).orElseThrow();
         teacher.setStatement(text);
         teacherRepository.saveAndFlush(teacher);
     }
-    public String findStatement(Long id){ // поиск завяления
+    public String findStatement(Long id){
         return teacherRepository.findStatementByTeacherId(id);
     }
-    public void createArrear(Long id, String arrear){ // создание задолжности
+    public void createArrear(Long id, String arrear){
         Student s = studentRepository.findById(id).orElseThrow();
-        //s.setArrears(Collections.singletonList(arrear));
         List<String> studentArrears = s.getArrears();
         studentArrears.add(arrear);
         s.setArrears(studentArrears);
         studentRepository.save(s);
     }
     public void deleteArrear(Long id, String arrear){
-        Student s = studentRepository.findById(id).orElseThrow();// удаление задолжности
+        Student s = studentRepository.findById(id).orElseThrow();
         List<String> studentArrears = s.getArrears();
         studentArrears.remove(arrear);
         s.setArrears(studentArrears);

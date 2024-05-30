@@ -31,7 +31,7 @@ public class StudentService {
         return studentRepository.findAllArrearsById(id);
     }
 
-    public void writeStatementToDeanery(String text, Long id){ //написание заявления
+    public void writeStatementToDeanery(String text, Long id){ //написание заявления в деканат
         Student s = studentRepository.findById(id).orElseThrow();
         s.setStatement(text);
         studentRepository.saveAndFlush(s);
@@ -39,15 +39,4 @@ public class StudentService {
     public String findStatement(Long id){ // поиск завяления
         return studentRepository.findStatementByStudentId(id);
     }
-    /*public void payOffUniversityDept(Long id, String arrear){ // погае
-        if (teacherService.approve().equals(true)){
-            Student s = studentRepository.findById(id).orElseThrow();
-            List<String> studentArrears = s.getArrears();
-            studentArrears.remove(arrear);
-            s.setArrears(studentArrears);
-            studentRepository.save(s);
-        } else {
-            System.out.println("Нет разрешения от преподавателя");
-        }
-    }*/
 }

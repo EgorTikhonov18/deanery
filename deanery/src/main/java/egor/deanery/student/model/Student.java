@@ -1,17 +1,20 @@
 package egor.deanery.student.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "student")
 @Table(name = "student")
 @Data
-@RequiredArgsConstructor
+@Builder
+@Schema(name = "Студент")
+
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +33,6 @@ public class Student {
     @Column(name = "arrears")
     private List<String> arrears; //задолжности
     @Column(name = "statement")
-    private String statement;
-    @Column(name = "password")
-    @JsonIgnore
-    private String password;
-    @Column(name = "role")
-    @JsonIgnore
-    private String role;//заявление
+    private String statement; //заявление
+
 }

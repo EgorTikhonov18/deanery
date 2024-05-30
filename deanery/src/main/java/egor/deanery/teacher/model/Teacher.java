@@ -1,14 +1,18 @@
 package egor.deanery.teacher.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Table(name = "teacher")
 @Entity(name = "teacher")
 @Data
-@RequiredArgsConstructor
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Schema(name = "Преподаватель")
+
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +30,5 @@ public class Teacher {
     private String qualificationCategory;
     @Column(name = "statement")
     private String statement; //заявление
-    @Column(name = "password")
-    @JsonIgnore
-    private String password;
-    @Column(name = "role")
-    @JsonIgnore
-    private String role;
+
 }

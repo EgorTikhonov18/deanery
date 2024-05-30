@@ -2,11 +2,13 @@ package egor.deanery.student.controller;
 
 import egor.deanery.student.service.StudentService;
 import egor.deanery.student.model.Student;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.RolesAllowed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PostAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +16,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/students")
 @Slf4j
-//@PostAuthorize("@authService.hasRole(authentication, 'STUDENT') && request.path.startsWith('/students')")
-@PreAuthorize("hasRole('STUDENT')")
+@Tag(name = "Контроллер студентов", description = "Позволяет студентам взаимодействовать с системой")
+
+//@PreAuthorize("hasRole('STUDENT')")
 public class StudentController {
     StudentService studentService;
 
@@ -25,32 +28,32 @@ public class StudentController {
     }
 
     @GetMapping("/info")
+    @SecurityRequirement(name = "JWT")
     public @ResponseBody Student getStudentInfo(@RequestParam Long id){
         Student student = studentService.getStudentInfo(id);
         return student;
     }
 
-    @PreAuthorize("permitAll()")
-    @GetMapping("/student")
-    public Student saveStudent(@RequestBody Student student){ // POST
+   /* //@PreAuthorize("permitAll()")
+    @PostMapping("/student")
+    @SecurityRequirement(name = "JWT")
+    public Student saveStudent(@RequestBody Student student){
 
         return studentService.saveStudent(student);
-    }
-
-    /*@DeleteMapping("/student/{id}/delArrear")
-    public void payOffUniversityDept(@PathVariable Long id, @RequestBody String arrear){
-        studentService.payOffUniversityDept(id, arrear);
     }*/
     @GetMapping("/student/arrears")
+    @SecurityRequirement(name = "JWT")
     public List<String> viewArrears(@RequestParam Long id){
             return studentService.viewArrears(id);
     }
-    @GetMapping("/student/{id}/statement")
-    public void writeStatementToDeanery(@RequestBody String text, @PathVariable Long id){ //POST student/{id}/statement
+    @PostMapping("/student/{id}/statement")
+    @SecurityRequirement(name = "JWT")
+    public void writeStatementToDeanery(@RequestBody String text, @PathVariable Long id){
          studentService.writeStatementToDeanery(text, id);
     }
     @GetMapping("/studentId/{id}/statement")
-    public String getStatement( @RequestParam Long id){
+    @SecurityRequirement(name = "JWT")
+    public String getStatement( @PathVariable Long id){
         return studentService.findStatement(id);
     }
 }
